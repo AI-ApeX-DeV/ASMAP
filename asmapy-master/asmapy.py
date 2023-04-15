@@ -29,6 +29,7 @@ def main():
     parser_diff.add_argument('--ips', default="", help="Path to file with ips. It will print the ASNs related to that ips which has changed", dest="ips_path")
     parser_download = subparsers.add_parser("download", help="download dumps")
     parser_download.add_argument('date', help="date to fetch dumps (format: YYYYMMDD)", type=valid_date)
+    parser_download.add_argument('dump_file', nargs='?', help="name of the dump file to download")
     parser_convert = subparsers.add_parser("to-human-readable", help="convert dump files to human-readable dumps (getting unique originating ASN for this prefix)")
     parser_convert.add_argument('-p', '--paths', nargs='+', default=[], help="paths with files to be converted", dest="paths")
     parser_convert.add_argument('-a', '--allasn', dest="all_asn",
@@ -56,7 +57,7 @@ def main():
         else:
             diff(args.infile1, args.infile2, args.ignore_unassigned)
     elif args.subcommand == "download":
-        construct(args.date)
+        construct(args.date, args.dump_file)
     else:
         parser.print_help()
         sys.exit("No command provided.")
